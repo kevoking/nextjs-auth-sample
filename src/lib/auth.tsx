@@ -112,16 +112,16 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         lastLoginAt: serverTimestamp(),
       });
       
-    } catch (error: any) {
-      throw new Error(error.message);
+    } catch (error: unknown) {
+      throw new Error(error instanceof Error ? error.message : 'Failed to create account');
     }
   };
 
   const signIn = async (email: string, password: string) => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
-    } catch (error: any) {
-      throw new Error(error.message);
+    } catch (error: unknown) {
+      throw new Error(error instanceof Error ? error.message : 'Failed to sign in');
     }
   };
 
@@ -148,16 +148,16 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           lastLoginAt: serverTimestamp(),
         });
       }
-    } catch (error: any) {
-      throw new Error(error.message);
+    } catch (error: unknown) {
+      throw new Error(error instanceof Error ? error.message : 'Failed to sign in with Google');
     }
   };
 
   const signOut = async () => {
     try {
       await firebaseSignOut(auth);
-    } catch (error: any) {
-      throw new Error(error.message);
+    } catch (error: unknown) {
+      throw new Error(error instanceof Error ? error.message : 'Failed to sign out');
     }
   };
 
@@ -179,8 +179,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
       // Update local user profile state
       setUserProfile(prev => prev ? { ...prev, displayName } : null);
-    } catch (error: any) {
-      throw new Error(error.message);
+    } catch (error: unknown) {
+      throw new Error(error instanceof Error ? error.message : 'Failed to update profile');
     }
   };
 
