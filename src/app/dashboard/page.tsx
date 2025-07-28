@@ -9,22 +9,13 @@ import { useAuth } from '@/lib/auth';
 
 export default function DashboardPage() {
   const router = useRouter();
-  const { user, userProfile, loading, signOut } = useAuth();
+  const { user, userProfile, loading } = useAuth();
 
   useEffect(() => {
     if (!loading && !user) {
       router.push('/login');
     }
   }, [user, loading, router]);
-
-  const handleSignOut = async () => {
-    try {
-      await signOut();
-      router.push('/');
-    } catch (error) {
-      console.error('Error signing out:', error);
-    }
-  };
 
   if (loading) {
     return (

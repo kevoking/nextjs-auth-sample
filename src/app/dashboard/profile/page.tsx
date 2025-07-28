@@ -59,6 +59,7 @@ export default function ProfilePage() {
       await updateUserProfile(data.displayName);
       toast.success('Profile updated successfully!');
     } catch (error) {
+      console.log(error);
       toast.error('Failed to update profile. Please try again.');
     } finally {
       setIsSubmitting(false);
