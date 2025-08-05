@@ -22,7 +22,7 @@ type ProfileFormData = z.infer<typeof profileSchema>;
 
 export default function ProfilePage() {
   const router = useRouter();
-  const { user, userProfile, loading, updateUserProfile } = useAuth();
+  const { user, userProfile, updateUserProfile } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
@@ -37,12 +37,6 @@ export default function ProfilePage() {
       email: '',
     },
   });
-
-  useEffect(() => {
-    if (!loading && !user) {
-      router.push('/login');
-    }
-  }, [user, loading, router]);
 
   useEffect(() => {
     if (user && userProfile) {
@@ -66,37 +60,26 @@ export default function ProfilePage() {
     }
   };
 
-  if (loading) {
+  if (!user || !userProfile) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-          <p className="mt-4 text-muted-foreground">Loading...</p>
+      <div className="flex flex-1 flex-col gap-4 p-4">
+        <div className="flex items-center justify-center h-full">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
         </div>
       </div>
     );
   }
 
-  if (!user) {
-    return null; // Will redirect in useEffect
-  }
-
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <Button
-            variant="ghost"
-            onClick={() => router.push('/dashboard')}
-            className="mb-4"
-          >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Dashboard
-          </Button>
-          <h1 className="text-3xl font-bold text-foreground">Edit Profile</h1>
+    <div className="flex flex-1 flex-col gap-4 p-4">
+      <div className="flex items-center gap-4">
+        <div>
+          <h1 className="text-2xl font-bold">Edit Profile</h1>
           <p className="text-muted-foreground">Update your account information</p>
         </div>
+      </div>
 
+      <div className="grid gap-4 md:grid-cols-2">
         <Card>
           <CardHeader>
             <CardTitle>Profile Information</CardTitle>
@@ -105,7 +88,7 @@ export default function ProfilePage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="displayName">Display Name</Label>
                 <Input
@@ -126,18 +109,16 @@ export default function ProfilePage() {
                   type="email"
                   disabled
                   {...register('email')}
-                  className="bg-muted cursor-not-allowed"
                 />
                 <p className="text-xs text-muted-foreground">
                   Email address cannot be changed. Contact support if you need to update this.
                 </p>
               </div>
 
-              <div className="flex gap-4 pt-4">
+              <div className="flex gap-2 pt-4">
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="flex-1"
                 >
                   {isSubmitting ? 'Updating...' : 'Update Profile'}
                 </Button>
@@ -145,7 +126,6 @@ export default function ProfilePage() {
                   type="button"
                   variant="outline"
                   onClick={() => router.push('/dashboard')}
-                  className="flex-1"
                 >
                   Cancel
                 </Button>
@@ -154,7 +134,7 @@ export default function ProfilePage() {
           </CardContent>
         </Card>
 
-        <Card className="mt-6">
+        <Card>
           <CardHeader>
             <CardTitle>Account Information</CardTitle>
             <CardDescription>
@@ -162,16 +142,16 @@ export default function ProfilePage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <dl className="space-y-4">
-              <div>
-                <dt className="text-sm font-medium text-muted-foreground">User ID</dt>
-                <dd className="text-sm text-foreground font-mono bg-muted px-2 py-1 rounded">
+            <div className="space-y-4">
+              <div className="space-y-1">
+                <Label className="text-sm font-medium text-muted-foreground">User ID</Label>
+                <div className="text-sm font-mono bg-muted p-2 rounded">
                   {user.uid}
-                </dd>
+                </div>
               </div>
-              <div>
-                <dt className="text-sm font-medium text-muted-foreground">Member Since</dt>
-                <dd className="text-sm text-foreground">
+              <div className="space-y-1">
+                <Label className="text-sm font-medium text-muted-foreground">Member Since</Label>
+                <div className="text-sm">
                   {userProfile?.createdAt 
                     ? new Date(userProfile.createdAt).toLocaleDateString('en-US', {
                         year: 'numeric',
@@ -180,11 +160,11 @@ export default function ProfilePage() {
                       })
                     : 'Unknown'
                   }
-                </dd>
+                </div>
               </div>
-              <div>
-                <dt className="text-sm font-medium text-muted-foreground">Last Login</dt>
-                <dd className="text-sm text-foreground">
+              <div className="space-y-1">
+                <Label className="text-sm font-medium text-muted-foreground">Last Login</Label>
+                <div className="text-sm">
                   {userProfile?.lastLoginAt 
                     ? new Date(userProfile.lastLoginAt).toLocaleDateString('en-US', {
                         year: 'numeric',
@@ -195,9 +175,9 @@ export default function ProfilePage() {
                       })
                     : 'Unknown'
                   }
-                </dd>
+                </div>
               </div>
-            </dl>
+            </div>
           </CardContent>
         </Card>
       </div>
