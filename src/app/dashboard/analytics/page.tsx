@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import {
-  IconChartBar,
   IconTrendingUp,
   IconTrendingDown,
   IconUsers,
@@ -34,7 +33,6 @@ import {
 } from "recharts"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
 import {
   Select,
   SelectContent,
@@ -293,7 +291,7 @@ export default function AnalyticsPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {conversionFunnelData.map((stage, index) => (
+              {conversionFunnelData.map((stage) => (
                 <div key={stage.stage} className="flex items-center gap-4">
                   <div className="w-20 text-sm font-medium">{stage.stage}</div>
                   <div className="flex-1">

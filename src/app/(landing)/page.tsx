@@ -210,7 +210,7 @@ export default function Home() {
           {/* What's Included */}
           <div className="grid md:grid-cols-2 gap-12">
             <div>
-              <h3 className="text-2xl font-bold text-foreground mb-6">🚀 What's Included</h3>
+              <h3 className="text-2xl font-bold text-foreground mb-6">🚀 What&apos;s Included</h3>
               <ul className="space-y-3 text-muted-foreground">
                 <li className="flex items-start">
                   <span className="text-primary mr-2">✓</span>

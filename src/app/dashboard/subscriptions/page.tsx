@@ -13,9 +13,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table"
 import {
-  IconCreditCard,
   IconUser,
-  IconCalendar,
   IconCurrencyDollar,
   IconCheck,
   IconX,
@@ -115,7 +113,7 @@ const mockSubscriptions: Subscription[] = [
 ]
 
 const StatusBadge = ({ status }: { status: Subscription['status'] }) => {
-  const variants: Record<Subscription['status'], { variant: any; icon: React.ReactNode }> = {
+  const variants: Record<Subscription['status'], { variant: "default" | "secondary" | "destructive" | "outline" | null | undefined; icon: React.ReactNode }> = {
     active: { variant: "default", icon: <IconCheck className="w-3 h-3" /> },
     trial: { variant: "secondary", icon: <IconClock className="w-3 h-3" /> },
     past_due: { variant: "destructive", icon: <IconX className="w-3 h-3" /> },

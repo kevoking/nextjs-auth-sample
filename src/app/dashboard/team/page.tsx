@@ -16,7 +16,6 @@ import {
   IconUsers,
   IconUserPlus,
   IconMail,
-  IconCalendar,
   IconCrown,
   IconUser,
   IconShield,
@@ -131,7 +130,7 @@ const mockTeamMembers: TeamMember[] = [
 ]
 
 const RoleBadge = ({ role }: { role: TeamMember['role'] }) => {
-  const variants: Record<TeamMember['role'], { variant: any; icon: React.ReactNode }> = {
+  const variants: Record<TeamMember['role'], { variant: "default" | "secondary" | "outline" | null | undefined; icon: React.ReactNode }> = {
     owner: { variant: "default", icon: <IconCrown className="w-3 h-3" /> },
     admin: { variant: "secondary", icon: <IconShield className="w-3 h-3" /> },
     member: { variant: "outline", icon: <IconUser className="w-3 h-3" /> },
@@ -149,7 +148,7 @@ const RoleBadge = ({ role }: { role: TeamMember['role'] }) => {
 }
 
 const StatusBadge = ({ status }: { status: TeamMember['status'] }) => {
-  const variants: Record<TeamMember['status'], { variant: any; icon: React.ReactNode }> = {
+  const variants: Record<TeamMember['status'], { variant: "default" | "secondary" | "destructive" | "outline" | null | undefined; icon: React.ReactNode }> = {
     active: { variant: "default", icon: <IconCheck className="w-3 h-3" /> },
     invited: { variant: "secondary", icon: <IconMail className="w-3 h-3" /> },
     suspended: { variant: "destructive", icon: <IconX className="w-3 h-3" /> },
